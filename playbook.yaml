@@ -1,0 +1,19 @@
+- name: Install requirements
+  hosts: ubuntu-rpi
+  tasks:
+
+  # - name: Install boto3 # so we can use amazon aws
+  #   become: yes
+  #   ansible.builtin.pip:
+  #     name: boto3
+
+
+  - name: copy files to server
+    copy:
+      src: docker-compose.yml
+      dest: /home/charlie/ansible/docker-compose.yml
+
+  - name: copy zigbee2mqtt
+    copy:
+      src: zigbee2mqtt-data/configuration.yaml
+      dest: /home/charlie/ansible/zigbee2mqtt-data/configuration.yaml
