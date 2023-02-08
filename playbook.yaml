@@ -1,7 +1,9 @@
 - name: Install requirements
   hosts: ubuntu-rpi
+  vars:
+    
   vars_files:
-  - secrets.yaml # to be inserted into templates
+    - secrets.yaml # to be inserted into templates
   tasks:
 
   # - name: Install boto3 # so we can use amazon aws

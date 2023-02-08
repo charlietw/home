@@ -1,2 +1,5 @@
 # sensitive .env files
 secrets.yaml
+
+# sensitive terraform values
+infrastructure/secrets.tfvars

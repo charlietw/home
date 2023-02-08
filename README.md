@@ -4,6 +4,17 @@ This repository contains all of the code to manage all things smart home.
 
 ## Setup
 
+### Secrets
+
+There are two files you need to create locally:
+
+`secrets.yaml` - containing the `NETWORK_KEY` for the zigbee2mqtt config.
+
+`infrastructure/secrets.tfvars` - containing the secrets required for Terraform, i.e.:
+- key = Key of the state file
+- bucket = Bucket containing the terraform state file
+- region = Region where the state file is kept
+
 ### SSH
 
 If you need to change the SSH key or create one from scratch, you can use `ssh-keygen`, then specify a filepath in the subsequent prompt. 
