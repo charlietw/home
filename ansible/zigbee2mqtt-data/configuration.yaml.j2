@@ -1,0 +1,38 @@
+# Allow home assistant autodiscovery, see https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html
+homeassistant: true
+
+# Let new devices join our zigbee network
+permit_join: true
+
+# Docker Compose makes the MQTT-Server available using "mqtt" hostname
+mqtt:
+  base_topic: zigbee2mqtt
+  server: mqtt://ubuntu-rpi:1883
+# Zigbee Adapter path
+serial:
+  port: /dev/ttyUSB0
+# Enable the Zigbee2MQTT frontend
+frontend:
+  port: 8080
+advanced:
+  network_key: {{ NETWORK_KEY }} # can be changed from {{ NETWORK_KEY }} to GENERATE to create a new one
+
+devices:
+  '0x00158d0006ec85a4':
+    friendly_name: 1_temp_upstairs
+  '0x00158d0006ebfc56':
+    friendly_name: 2_temp_living_room
+  '0x00158d0006ec7e4c':
+    friendly_name: 4_temp_fridge
+  '0x00158d0006d48b4c':
+    friendly_name: upstairs_switch
+  '0x00158d0006d40856':
+    friendly_name: charlie_bedside_switch
+  '0x00158d00070b0e4b':
+    friendly_name: upstairs_window
+  '0x00158d0006d4da14':
+    friendly_name: living_room_switch
+  '0x00158d0006ec71a4':
+    friendly_name: 3_temp_bedroom
+  '0x00158d0006ffdb67':
+    friendly_name: glory_hole_door

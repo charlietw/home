@@ -1,0 +1,62 @@
+version: '3'
+services:
+
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /home/charlie/docker/homeassistant-config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+
+  portainer-ce:
+    container_name: portainer
+    environment:
+      - TZ=Europe/London
+    ports:
+      - '8000:8000'
+      - '9000:9000'
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    image: "portainer/portainer-ce"
+
+
+  mosquitto:
+    container_name: mosquitto
+    environment:
+      - TZ=Europe/London
+    ports:
+      - '1883:1883'
+      - '9001:9001'
+    image: 'eclipse-mosquitto'
+    volumes:
+      - /home/charlie/docker/mosquitto/data:/mosquitto/data
+      - /home/charlie/docker/mosquitto/log:/mosquitto/log
+      - /home/charlie/docker/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    restart: always
+
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    ports:
+     - '8080:8080'
+    depends_on:
+      - mosquitto
+    volumes:
+      - '/home/ansible-ssh/ansible/zigbee2mqtt-data:/app/data'
+      - '/run/udev:/run/udev:ro'
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    environment:
+      - TZ=Europe/London
+    privileged: true
+    restart: always
+    image: koenkk/zigbee2mqtt
+
+volumes:
+  portainer_data:
+  gdrivebackup_creds:

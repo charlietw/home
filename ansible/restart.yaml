@@ -1,0 +1,19 @@
+- name: Restart docker-compose
+  hosts: ubuntu-rpi
+  tasks:
+
+  - name: Tear down existing services
+    become: yes
+    community.docker.docker_compose:
+      project_src: ansible
+      state: absent # Specifying absent is the same as running docker-compose down
+
+  - name: Create and start services
+    become: yes
+    community.docker.docker_compose:
+      project_src: ansible
+      state: present # default is present
+    register: output
+
+  - ansible.builtin.debug:
+      var: output

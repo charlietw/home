@@ -15,9 +15,15 @@
   - name: copy files to server
     copy:
       src: docker-compose.yml
-      dest: /home/charlie/ansible/docker-compose.yml
+      dest: /home/ansible-ssh/ansible/docker-compose.yml
+
+  - name: Create directory if it does not exist
+    ansible.builtin.file:
+      path: /home/ansible-ssh/ansible/zigbee2mqtt-data
+      state: directory
+      mode: '0755'
 
   - name: copy zigbee2mqtt template
     template:
       src: zigbee2mqtt-data/configuration.yaml.j2
-      dest: /home/charlie/ansible/zigbee2mqtt-data/configuration.yaml
+      dest: /home/ansible-ssh/ansible/zigbee2mqtt-data/configuration.yaml

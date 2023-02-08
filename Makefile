@@ -1,12 +1,16 @@
 account := mt-playground
 
-.PHONY: ansible
-ansible:
-	ansible-playbook -i inventory.yaml playbook.yaml
+.PHONY: setup
+setup:
+	ansible-playbook -i ansible/inventory.yaml ansible/setup.yaml
+
+.PHONY: update
+update:
+	ansible-playbook -i ansible/inventory.yaml ansible/update.yaml
 
 .PHONY: ping # ping all hosts
 ping:
-	ansible all -m ping -i inventory.yaml
+	ansible all -m ping -i ansible/inventory.yaml
 
 .PHONY: ping # ssh as ansible
 ssh:
