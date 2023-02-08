@@ -1,3 +1,2 @@
 # sensitive .env files
-traefik/.env
-webserver/.env
+secrets.yaml

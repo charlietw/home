@@ -28,8 +28,8 @@ The `Makefile` contains all of the commands required.
 
 ## Zigbee2mqtt
 
-Thne `configuration.yaml` file is copied to the remote server upon `make ansible` call. 
+Thne `configuration.yaml.j2` file is copied to the remote server upon `make ansible` call, but it is templated to insert secrets such as the `network_key`. 
 
-TODO: Currently, the `configuration.yaml` overwrites the existing one on the server which causes problems with `advanced.network_key`, as it gets regenerated each time. Create a way to solve this
 TODO: Bring home assistant config.yaml into version control(?)
+
 TODO: Back up home assistant config to S3

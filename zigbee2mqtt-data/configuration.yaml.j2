@@ -10,6 +10,5 @@ serial:
 # Enable the Zigbee2MQTT frontend
 frontend:
   port: 8080
-# Let Zigbee2MQTT generate a new network key on first start
 advanced:
-  network_key: GENERATE
+  network_key: {{ NETWORK_KEY }} # can be changed from {{ NETWORK_KEY }} to GENERATE to create a new one
