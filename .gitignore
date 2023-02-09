@@ -3,3 +3,7 @@ secrets.yaml
 
 # sensitive terraform values
 infrastructure/secrets.tfvars
+
+# terraform generated files
+infrastructure/.terraform
+infrastructure/.terraform.lock.hcl

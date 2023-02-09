@@ -1,4 +1,4 @@
-account := mt-playground
+account := personal-terraform
 
 .PHONY: setup
 setup:
@@ -23,16 +23,16 @@ identity:
 
 .PHONY: init
 init:
-	aws-vault exec $(account) -- terraform init -chdir=infrastructure -backend-config=secret.tfvars
+	aws-vault exec $(account) -- terraform -chdir=infrastructure init -backend-config=secrets.tfvars
 
 .PHONY: plan
 plan:
-	aws-vault exec $(account) -- terraform plan -chdir=infrastructure
+	aws-vault exec $(account) -- terraform -chdir=infrastructure plan 
 
 .PHONY: apply
 apply:
-	aws-vault exec $(account) -- terraform apply -chdir=infrastructure
+	aws-vault exec $(account) -- terraform -chdir=infrastructure apply 
 
 .PHONY: destroy
 destroy:
-	aws-vault exec $(account) -- terraform destroy -chdir=infrastructure
+	aws-vault exec $(account) -- terraform -chdir=infrastructure destroy 
