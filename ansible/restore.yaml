@@ -1,0 +1,42 @@
+- name: Restore home assistant config from S3
+  hosts: ubuntu-rpi
+  vars_files:
+  - aws_secrets.yaml 
+  tasks:
+
+  # - name: Tear down existing services
+  #   become: yes
+  #   community.docker.docker_compose:
+  #     project_src: ansible
+  #     state: absent # Specifying absent is the same as running docker-compose down
+
+  - name: Get the backup from S3
+    amazon.aws.s3_object:
+      mode: get
+      bucket: "{{ BUCKET_NAME }}"
+      access_key: "{{ AWS_ACCESS_KEY_ID }}"
+      secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+      object: homeassistant-backup.tgz
+      dest: /home/ansible-ssh/ansible/homeassistant-restore.tgz
+
+  - name: Create directory if it does not exist
+    ansible.builtin.file:
+      path: /home/ansible-ssh/ansible/homeassistant-config
+      state: directory
+      mode: '0755'
+
+  - name: Decompress homeassistant files
+    ansible.builtin.unarchive:
+      remote_src: yes
+      src: /home/ansible-ssh/ansible/homeassistant-restore.tgz
+      dest: /home/ansible-ssh/ansible # it will unpack a directory here i.e. homeassistant-config
+
+  - name: Create and start services
+    become: yes
+    community.docker.docker_compose:
+      project_src: ansible
+      state: present # default is present
+    register: output
+
+  - ansible.builtin.debug:
+      var: output

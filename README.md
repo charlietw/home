@@ -55,8 +55,5 @@ The physical USB stick may change port if there is a power cycle. It will most l
 
 ## To-do
 
-TODO: Bring home assistant config.yaml into version control(?)
-
-TODO: Back up home assistant config to S3
 
 TODO: Ensure all references to previous user 'Charlie' are removed, and replaced by 'ansible-ssh'

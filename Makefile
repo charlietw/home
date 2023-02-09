@@ -1,5 +1,7 @@
 account := personal-terraform
 
+# Ansible commands
+
 .PHONY: setup
 setup:
 	ansible-playbook -i ansible/inventory.yaml ansible/setup.yaml
@@ -12,14 +14,21 @@ update:
 backup:
 	ansible-playbook -i ansible/inventory.yaml ansible/backup.yaml
 
+.PHONY: restore
+restore:
+	ansible-playbook -i ansible/inventory.yaml ansible/restore.yaml
+
+
 .PHONY: ping # ping all hosts
 ping:
 	ansible all -m ping -i ansible/inventory.yaml
 
-.PHONY: ping # ssh as ansible
+.PHONY: ssh # ssh as ansible
 ssh:
 	ssh -i ~/.ssh/ansible-ssh ansible-ssh@ubuntu-rpi
 
+
+# Terraform commands
 
 .PHONY: identity
 identity: 

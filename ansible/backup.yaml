@@ -1,4 +1,4 @@
-- name: Install Home Assistant update
+- name: Backup home assistant config to S3
   hosts: ubuntu-rpi
   vars_files:
   - aws_secrets.yaml 
