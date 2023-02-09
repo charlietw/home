@@ -14,6 +14,7 @@ resource "local_sensitive_file" "foo" {
   content  = <<EOF
 AWS_ACCESS_KEY_ID: ${aws_iam_access_key.ansible.id}
 AWS_SECRET_ACCESS_KEY: ${aws_iam_access_key.ansible.secret}
+BUCKET_NAME: ${aws_s3_bucket.bucket.id}
   EOF
   filename = "../ansible/aws_secrets.yaml"
 }
@@ -31,7 +32,10 @@ resource "aws_iam_user_policy" "lb_ro" {
         "s3:*"
       ],
       "Effect": "Allow",
-      "Resource": "${aws_s3_bucket.bucket.arn}"
+      "Resource": 
+        "${aws_s3_bucket.bucket.arn}/*",
+        "${aws_s3_bucket.bucket.arn}"
+      ]
     }
   ]
 }

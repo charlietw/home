@@ -1,17 +1,24 @@
 - name: Install Home Assistant update
   hosts: ubuntu-rpi
-  vars:
-    BUCKET_NAME: ubuntu-rpi-homeassistant-backups
   vars_files:
   - aws_secrets.yaml 
   tasks:
 
-  - name: List keys simple
+  # - name: Compress homeassistant files
+  #   become: yes
+  #   community.general.archive:
+  #     path: /home/charlie/docker/homeassistant-config
+  #     dest: /home/charlie/docker/homeassistant-config.tgz
+
+  - name: Put the backup into S3
+    become: yes 
     amazon.aws.s3_object:
+      mode: put
       bucket: "{{ BUCKET_NAME }}"
-      mode: list
       access_key: "{{ AWS_ACCESS_KEY_ID }}"
       secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+      object: homeassistant-config.tgz
+      src: /home/charlie/docker/homeassistant-config.tgz
     register: output
 
   - ansible.builtin.debug:
