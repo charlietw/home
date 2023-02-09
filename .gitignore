@@ -1,5 +1,6 @@
 # sensitive .env files
-secrets.yaml
+ansible/secrets.yaml
+ansible/aws_secrets.yaml
 
 # sensitive terraform values
 infrastructure/secrets.tfvars

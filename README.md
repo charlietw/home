@@ -8,7 +8,9 @@ This repository contains all of the code to manage all things smart home.
 
 There are two files you need to create locally:
 
-`secrets.yaml` - containing the `NETWORK_KEY` for the zigbee2mqtt config.
+`secrets.yaml` - containing:
+- `NETWORK_KEY` for the zigbee2mqtt config.
+- `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` with access to S3
 
 `infrastructure/secrets.tfvars` - containing the secrets required for Terraform, i.e.:
 - key = Key of the state file
@@ -32,6 +34,10 @@ sudo passwd <<USER>>
 Once you have the user set up, you can run `ssh-copy-id -i <<FILEPATH>> <<USER>>@ubuntu-rpi`
 
 The -i switch specifies where the key file is. 
+
+### AWS
+
+You will need access to an IAM user with MFA enabled, as documented in [this issue](https://github.com/99designs/aws-vault/issues/260#issuecomment-397601165). This user will then create another user which Ansible will use.
 
 
 ## Usage

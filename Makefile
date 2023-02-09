@@ -1,4 +1,4 @@
-account := personal-terraform
+account := personal-tf
 
 .PHONY: setup
 setup:
@@ -7,6 +7,10 @@ setup:
 .PHONY: update
 update:
 	ansible-playbook -i ansible/inventory.yaml ansible/update.yaml
+
+.PHONY: backup
+backup:
+	ansible-playbook -i ansible/inventory.yaml ansible/backup.yaml
 
 .PHONY: ping # ping all hosts
 ping:
