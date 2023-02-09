@@ -1,4 +1,4 @@
-account := personal-tf
+account := personal-terraform
 
 .PHONY: setup
 setup:

@@ -4,11 +4,11 @@
   - aws_secrets.yaml 
   tasks:
 
-  # - name: Compress homeassistant files
-  #   become: yes
-  #   community.general.archive:
-  #     path: /home/charlie/docker/homeassistant-config
-  #     dest: /home/charlie/docker/homeassistant-config.tgz
+  - name: Compress homeassistant files
+    become: yes
+    community.general.archive:
+      path: /home/charlie/docker/homeassistant-config
+      dest: /home/charlie/docker/homeassistant-backup.tgz
 
   - name: Put the backup into S3
     become: yes 
@@ -17,8 +17,8 @@
       bucket: "{{ BUCKET_NAME }}"
       access_key: "{{ AWS_ACCESS_KEY_ID }}"
       secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
-      object: homeassistant-config.tgz
-      src: /home/charlie/docker/homeassistant-config.tgz
+      object: homeassistant-backup.tgz
+      src: /home/charlie/docker/homeassistant-backup.tgz
     register: output
 
   - ansible.builtin.debug:
