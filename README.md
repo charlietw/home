@@ -29,12 +29,20 @@ getent passwd # will list all users, so...
 getent passwd | grep <<USER>> # will tell us if user exists
 
 sudo useradd -m <<USER>> -s /bin/bash # -m flag adds home dir, -s ensures default shell is bash
-sudo passwd <<USER>>
+sudo passwd <<USER>> # to set password
+
+sudo visudo # to allow ansible to sudo without a password
 ```
+
+Append `<<USER>> ALL=(ALL) NOPASSWD:ALL` to the end of the text file opened with the final command.
 
 Once you have the user set up, you can run `ssh-copy-id -i <<FILEPATH>> <<USER>>@ubuntu-rpi`
 
 The -i switch specifies where the key file is. 
+
+### Docker
+
+To install docker on the remote server, follow the instructions from the [Docker documentation](https://docs.docker.com/engine/install/ubuntu/)
 
 ### AWS
 
@@ -56,3 +64,4 @@ The physical USB stick may change port if there is a power cycle. It will most l
 ## To-do
 
 TODO: Set up cronjob for backups to S3
+TODO: Firewall automation?

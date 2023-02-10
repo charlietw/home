@@ -6,11 +6,21 @@
     - secrets.yaml # to be inserted into templates
   tasks:
 
-  # - name: Install boto3 # so we can use amazon aws
-  #   become: yes
-  #   ansible.builtin.pip:
-  #     name: boto3
+  - name: install pip3
+    become: yes
+    apt: 
+      name: python3-pip
+      state: present 
 
+  - name: Install pip packages
+    become: yes
+    ansible.builtin.pip:
+      name: "{{ item }}"
+    loop:
+      - docker
+      - docker-compose
+      - boto3
+  
   - name: Create directories if they do not already exist
     ansible.builtin.file:
       path: '/home/ansible-ssh/{{ item }}'
