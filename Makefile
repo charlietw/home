@@ -6,6 +6,10 @@ account := personal-terraform
 setup:
 	ansible-playbook -i ansible/inventory.yaml ansible/setup.yaml
 
+.PHONY: restart
+restart:
+	ansible-playbook -i ansible/inventory.yaml ansible/restart.yaml
+
 .PHONY: update
 update:
 	ansible-playbook -i ansible/inventory.yaml ansible/update.yaml

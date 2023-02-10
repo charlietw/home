@@ -4,7 +4,7 @@ This repository contains all of the code to manage all things smart home.
 
 ## Setup
 
-### Secrets
+### Secrets
 
 There are two files you need to create locally:
 
