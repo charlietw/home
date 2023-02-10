@@ -34,9 +34,9 @@ services:
       - '9001:9001'
     image: 'eclipse-mosquitto'
     volumes:
-      - /home/charlie/docker/mosquitto/data:/mosquitto/data
-      - /home/charlie/docker/mosquitto/log:/mosquitto/log
-      - /home/charlie/docker/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - /home/ansible-ssh/ansible/mosquitto/data:/mosquitto/data
+      - /home/ansible-ssh/ansible/mosquitto/log:/mosquitto/log
+      - /home/ansible-ssh/ansible/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
     restart: always
 
 
@@ -59,4 +59,3 @@ services:
 
 volumes:
   portainer_data:
-  gdrivebackup_creds:

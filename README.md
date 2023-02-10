@@ -55,5 +55,4 @@ The physical USB stick may change port if there is a power cycle. It will most l
 
 ## To-do
 
-
-TODO: Ensure all references to previous user 'Charlie' are removed, and replaced by 'ansible-ssh'
+TODO: Set up cronjob for backups to S3
