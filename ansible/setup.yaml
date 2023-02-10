@@ -47,3 +47,27 @@
     template:
       src: config-files/configuration.yaml.j2
       dest: /home/ansible-ssh/ansible/zigbee2mqtt-data/configuration.yaml
+
+  - name: Setup SSH rate limiting
+    become: yes
+    community.general.ufw:
+      rule: limit
+      port: ssh
+      proto: tcp
+
+  - name: Allow all access to tcp ports
+    become: yes
+    community.general.ufw:
+      rule: allow
+      port: '{{ item }}'
+      proto: tcp
+    loop:
+      - 8080 # zigbee2mqtt
+      - 9000 # portainer
+      - 1883 # mqtt
+      - 8123 # homeassistant
+
+  - name: Reload firewall
+    become: yes
+    community.general.ufw:
+      state: reloaded
