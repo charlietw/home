@@ -2,15 +2,19 @@
   hosts: ubuntu-rpi
   vars:
     
-  vars_files:
-    - secrets.yaml # to be inserted into templates
+  vars_files: # to be inserted into templates
+    - secrets.yaml 
+    - aws_secrets.yaml
   tasks:
 
-  - name: install pip3
+  - name: install pip3 and awscli
     become: yes
     apt: 
-      name: python3-pip
+      name: "{{ item }}"
       state: present 
+    loop:
+      - python3-pip
+      - awscli
 
   - name: Install pip packages
     become: yes
@@ -43,10 +47,20 @@
       - { src: mosquitto.conf, dest: mosquitto/config/mosquitto.conf }
 
 
-  - name: copy zigbee2mqtt template
+  - name: copy zigbee2mqtt and cron templates
     template:
-      src: config-files/configuration.yaml.j2
-      dest: /home/ansible-ssh/ansible/zigbee2mqtt-data/configuration.yaml
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+    loop:
+      - { src: config-files/configuration.yaml.j2, dest: /home/ansible-ssh/ansible/zigbee2mqtt-data/configuration.yaml }
+      - { src: config-files/backup-cron.sh.j2, dest: /home/ansible-ssh/ansible/backup-cron.sh }
+
+  - name: Backup homeassistant to S3 at 4am daily
+    ansible.builtin.cron:
+      name: "homeassistant s3 backup"
+      minute: "0"
+      hour: "4"
+      job: "sudo /home/ansible-ssh/ansible/backup-cron.sh >/dev/null 2>&1"
 
   - name: Setup SSH rate limiting
     become: yes

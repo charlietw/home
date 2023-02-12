@@ -1,0 +1,5 @@
+aws configure set aws_access_key_id {{ AWS_ACCESS_KEY_ID }}
+aws configure set aws_secret_access_key {{ AWS_SECRET_ACCESS_KEY }}
+
+tar -cvzf /home/ansible-ssh/ansible/homeassistant-backup.tgz /home/ansible-ssh/ansible/homeassistant-config
+aws s3api put-object --bucket {{ BUCKET_NAME }} --key homeassistant-backup.tgz --body /home/ansible-ssh/ansible/homeassistant-backup.tgz

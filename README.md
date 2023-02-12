@@ -61,7 +61,4 @@ The `configuration.yaml.j2` file is copied to the remote server upon `make ansib
 
 The physical USB stick may change port if there is a power cycle. It will most likely be in `/dev/ttyUSB0`, but this is worth checking, and can be verified by following the instructions [here](https://www.zigbee2mqtt.io/guide/installation/01_linux.html).
 
-## To-do
 
-TODO: Set up cronjob for backups to S3
-TODO: Firewall automation?
