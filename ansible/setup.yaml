@@ -80,6 +80,9 @@
       - 9000 # portainer
       - 1883 # mqtt
       - 8123 # homeassistant
+      - 5601 # Kibana
+      - 9200 # elasticsearch
+      - 9300 # elasticsearch
 
   - name: Reload firewall
     become: yes
