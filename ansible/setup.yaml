@@ -37,6 +37,7 @@
       - ansible/mosquitto/data
       - ansible/mosquitto/log
       - ansible/mosquitto/config
+      - ansible/elastic
 
   - name: copy files to server
     copy:
@@ -45,7 +46,9 @@
     loop:
       - { src: docker-compose.yml, dest: docker-compose.yml }
       - { src: mosquitto.conf, dest: mosquitto/config/mosquitto.conf }
-      - { src: filebeat.docker.yml, dest: filebeat.docker.ym }
+      - { src: filebeat.docker.yml, dest: filebeat.docker.yml }
+      - { src: elastic/elastic-compose.yml, dest: elastic/elastic-compose.yml }
+
 
 
   - name: copy zigbee2mqtt and cron templates
