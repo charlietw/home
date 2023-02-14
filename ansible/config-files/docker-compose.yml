@@ -67,6 +67,8 @@ services:
       - '9300:9300'
     networks:
       - elastic
+    labels:
+      - co.elastic.logs/module=elasticsearch
 
   kibana:
     container_name: kibana
@@ -77,6 +79,27 @@ services:
       - '5601:5601'
     networks:
       - elastic
+  
+  logstash:
+    container_name: logstash
+    image: 'docker.elastic.co/logstash/logstash:8.6.1'
+    volumes:
+      - '/home/ansible-ssh/ansible/logstash/pipeline/:/usr/share/logstash/pipeline/' # logstash looks in /usr/share/logstash/pipeline/ by default for pipeline config
+      #- /home/ansible-ssh/ansible/logstash/settings/:/usr/share/logstash/config/ # uncomment if you want to add settings, see https://www.elastic.co/guide/en/logstash/current/docker-config.html
+  
+  filebeat:
+    container_name: filebeat
+    user: root
+    image: 'docker.elastic.co/beats/filebeat:8.6.1'
+    environment:
+      - setup.kibana.host=ubuntu-rpi:5601
+      - output.elasticsearch.hosts=["elasticsearch-compose:9200"]
+      - strict.perms=false
+    volumes:
+      - '/home/ansible-ssh/ansible/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
+      - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+
 
 
 volumes:
