@@ -83,6 +83,7 @@
       - 8080 # zigbee2mqtt
       - 9000 # portainer
       - 1883 # mqtt
+      - 9001 # mqtt
       - 8123 # homeassistant
       - 5601 # Kibana
       - 9200 # elasticsearch
