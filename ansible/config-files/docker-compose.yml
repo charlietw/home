@@ -5,7 +5,7 @@ services:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
-      - /home/ansible-ssh/ansible/homeassistant-config:/config
+      - $PWD/ansible/homeassistant-config:/config
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true
@@ -34,9 +34,9 @@ services:
       - '9001:9001'
     image: 'eclipse-mosquitto'
     volumes:
-      - /home/ansible-ssh/ansible/mosquitto/data:/mosquitto/data
-      - /home/ansible-ssh/ansible/mosquitto/log:/mosquitto/log
-      - /home/ansible-ssh/ansible/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - $PWD/ansible/mosquitto/data:/mosquitto/data
+      - $PWD/ansible/mosquitto/log:/mosquitto/log
+      - $PWD/ansible/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
     restart: always
 
 
@@ -47,7 +47,7 @@ services:
     depends_on:
       - mosquitto
     volumes:
-      - '/home/ansible-ssh/ansible/zigbee2mqtt-data:/app/data'
+      - '$PWD/ansible/zigbee2mqtt-data:/app/data'
       - '/run/udev:/run/udev:ro'
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
@@ -57,6 +57,21 @@ services:
     restart: always
     image: koenkk/zigbee2mqtt
   
+  influxdb:
+    container_name: influxdb
+    ports:
+      - 8086:8086
+    volumes:
+      - influxdb_vol:/var/lib/influxdb2
+    image: influxdb:latest
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=username
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=org
+      - DOCKER_INFLUXDB_INIT_BUCKET=bucket
+  
 
 volumes:
   portainer_data:
+  influxdb_vol:
