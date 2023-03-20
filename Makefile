@@ -22,6 +22,9 @@ backup:
 restore:
 	ansible-playbook -i ansible/inventory.yaml ansible/restore.yaml
 
+.PHONY: influxdb-setup
+influxdb-setup:
+	ansible-playbook -i ansible/inventory.yaml ansible/influxdb/setup.yaml
 
 .PHONY: ping # ping all hosts
 ping:
