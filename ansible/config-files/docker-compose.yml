@@ -71,6 +71,15 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=org
       - DOCKER_INFLUXDB_INIT_BUCKET=bucket
   
+  grafana:
+    container_name: grafana
+    ports:
+      - 3000:3000
+    image: grafana/grafana-oss:latest
+    volumes:
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./grafana/datasources/influxdb.yaml:/etc/grafana/provisioning/datasources/influxdb.yaml
 
 volumes:
   portainer_data:
