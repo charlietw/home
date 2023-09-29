@@ -37,6 +37,340 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyGBP"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "balance"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Net worth"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P5697886F9CA74929"
+          },
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\")\n  |> filter(fn: (r) => r._field == \"relevant_expenses\")\n  |> movingAverage(n: ${ma_months})\n  |> yield()",
+          "refId": "A"
+        }
+      ],
+      "title": "Monthly expenses (${ma_months} month MA)",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "balance"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Net worth"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P5697886F9CA74929"
+          },
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\")\n  |> filter(fn: (r) => r._field == \"saving_rate\")\n  |> movingAverage(n: ${ma_months})\n  |> yield()",
+          "refId": "A"
+        }
+      ],
+      "title": "Savings rate  (${ma_months} month MA)",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyGBP"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "balance"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Net worth"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P5697886F9CA74929"
+          },
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"finance\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "refId": "A"
+        }
+      ],
+      "title": "Net worth",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyGBP"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "balance Liabilities:StudentLoan * -1"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P5697886F9CA74929"
+          },
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account == \"Liabilities:StudentLoan\"))",
+          "refId": "A"
+        }
+      ],
+      "title": "Student Loan",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "binary": {
+              "left": "balance Liabilities:StudentLoan",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "-1"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "palette-classic"
           },
           "custom": {
@@ -103,9 +437,9 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 24,
+        "w": 12,
         "x": 0,
-        "y": 0
+        "y": 6
       },
       "id": 5,
       "options": {
@@ -126,11 +460,162 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"savings_rate\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
       "title": "Net worth",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 67,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyGBP"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_liquid"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Cash"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_fixed"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Investments"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_debt"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Liabilities"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P5697886F9CA74929"
+          },
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _liquid: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"]\n     }))\n  |> map(fn: (r) => ({ r with _fixed: \n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:Crypto\"]\n     }))\n  |> map(fn: (r) => ({ r with _debt: \n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "refId": "A"
+        }
+      ],
+      "title": "Cash, investments, and liabilities",
       "transformations": [],
       "type": "timeseries"
     },
@@ -151,7 +636,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "line",
+            "drawStyle": "bars",
             "fillOpacity": 67,
             "gradientMode": "scheme",
             "hideFrom": {
@@ -204,10 +689,10 @@
         ]
       },
       "gridPos": {
-        "h": 9,
-        "w": 24,
+        "h": 7,
+        "w": 12,
         "x": 0,
-        "y": 6
+        "y": 12
       },
       "id": 7,
       "options": {
@@ -228,7 +713,7 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"savings_rate\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n     }))\n  |> difference(nonNegative: false, columns: [\"_value\"])\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n     }))\n  |> difference(nonNegative: false, columns: [\"_value\"])\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
@@ -298,149 +783,19 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Assets:Investments:Crypto {_field=\"balance\", _start=\"1970-01-01 00:00:00 +0000 UTC\", _stop=\"2023-09-23 20:21:45.421836401 +0000 UTC\"}"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Crypto"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Assets:Investments:MoneyboxLISA {_field=\"balance\", _start=\"1970-01-01 00:00:00 +0000 UTC\", _stop=\"2023-09-23 20:21:45.421836401 +0000 UTC\"}"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Lifetime ISA"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Assets:Investments:StocksSharesISA {_field=\"balance\", _start=\"1970-01-01 00:00:00 +0000 UTC\", _stop=\"2023-09-23 20:21:45.421836401 +0000 UTC\"}"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Stocks and Shares ISA"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 15
-      },
-      "id": 6,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"savings_rate\" and (r.account =~ /Assets:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    ])\n  |> yield()",
-          "refId": "A"
-        }
-      ],
-      "title": "Investments",
-      "transformations": [],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
-      "description": "Cash which I can access quickly",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 67,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "currencyGBP"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
               "options": "balance"
             },
             "properties": [
               {
                 "id": "displayName",
-                "value": "LIQUID"
+                "value": "Cash"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "LIQUID"
+              "options": "balance"
             },
             "properties": [
               {
@@ -455,10 +810,10 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 7,
         "w": 12,
-        "x": 12,
-        "y": 15
+        "x": 0,
+        "y": 19
       },
       "id": 2,
       "options": {
@@ -479,139 +834,12 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"savings_rate\" and (r.account =~ /Assets:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"]\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:BankAccounts:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"]\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\"\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
-      "title": "Liquid assets",
+      "title": "Cash",
       "transformations": [],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisGridShow": true,
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "currencyGBP"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "balance Liabilities:StudentLoan * -1"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 6,
-        "x": 0,
-        "y": 24
-      },
-      "id": 4,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"savings_rate\" and (r.account == \"Liabilities:StudentLoan\"))",
-          "refId": "A"
-        }
-      ],
-      "title": "Student Loan",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "binary": {
-              "left": "balance Liabilities:StudentLoan",
-              "operator": "*",
-              "reducer": "sum",
-              "right": "-1"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            },
-            "replaceFields": true
-          }
-        }
-      ],
       "type": "timeseries"
     },
     {
@@ -676,34 +904,58 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "balance"
+              "options": "Assets:Investments:Crypto"
             },
             "properties": [
               {
                 "id": "displayName",
-                "value": "Net worth"
+                "value": "Crypto"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Assets:Investments:MoneyboxLISA"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Lifetime ISA"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Assets:Investments:StocksSharesISA"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Stocks and Shares ISA"
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 7,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 19
       },
-      "id": 8,
+      "id": 6,
       "options": {
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
-          "sort": "none"
+          "sort": "desc"
         }
       },
       "targets": [
@@ -712,22 +964,50 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"savings_rate\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _liquid: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"]\n     }))\n  |> map(fn: (r) => ({ r with _fixed: \n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:Crypto\"]\n     }))\n  |> map(fn: (r) => ({ r with _debt: \n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
-      "title": "Fixed, liquid, and liabilities",
+      "title": "Investments",
       "transformations": [],
       "type": "timeseries"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "hide": 2,
+        "name": "bucket_name",
+        "query": "finance",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "12",
+          "value": "12"
+        },
+        "hide": 0,
+        "label": "Number of months for MA",
+        "name": "ma_months",
+        "options": [
+          {
+            "selected": true,
+            "text": "12",
+            "value": "12"
+          }
+        ],
+        "query": "12",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
   },
   "time": {
     "from": "2019-12-18T16:07:16.935Z",
@@ -737,6 +1017,6 @@
   "timezone": "",
   "title": "Finance",
   "uid": "joXcUZWIk",
-  "version": 8,
+  "version": 3,
   "weekStart": ""
 }
