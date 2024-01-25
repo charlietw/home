@@ -89,6 +89,7 @@
       - 8123 # homeassistant
       - 8086 # Influxdb
       - 3000 # Grafana
+      - 8010 # paperless
 
   - name: Reload firewall
     become: yes

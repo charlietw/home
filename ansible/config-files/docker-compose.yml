@@ -81,6 +81,46 @@ services:
       - ./grafana/dashboards:/var/lib/grafana/dashboards
       - ./grafana/datasources/influxdb.yaml:/etc/grafana/provisioning/datasources/influxdb.yaml
 
+
+  paperless-broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - paperless-redisdata:/data
+
+  paperless-db:
+    image: docker.io/library/postgres:15
+    restart: unless-stopped
+    volumes:
+      - paperless-pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: paperless
+
+  paperless-webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - paperless-db
+      - paperless-broker
+    ports:
+      - "8010:8000"
+    volumes:
+      - paperless-data:/usr/src/paperless/data
+      - paperless-media:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
+    env_file: docker-compose.env
+    environment:
+      PAPERLESS_REDIS: redis://paperless-broker:6379
+      PAPERLESS_DBHOST: paperless-db
+
+
 volumes:
   portainer_data:
   influxdb_vol:
+  paperless-data:
+  paperless-media:
+  paperless-pgdata:
+  paperless-redisdata:
