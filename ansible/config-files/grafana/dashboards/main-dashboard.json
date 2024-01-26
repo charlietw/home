@@ -250,7 +250,7 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"finance\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"finance\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Assets:Property:6CommonRoad\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
@@ -672,7 +672,7 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"finance\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"finance\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Assets:Property:6CommonRoad\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
@@ -905,7 +905,7 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Assets:Property:6CommonRoad\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
@@ -1028,6 +1028,25 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_property"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Property"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
           }
         ]
       },
@@ -1056,7 +1075,7 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _liquid: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"]\n     }))\n  |> map(fn: (r) => ({ r with _fixed: \n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:Crypto\"]\n     }))\n  |> map(fn: (r) => ({ r with _debt: \n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _liquid: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"]\n     }))\n  |> map(fn: (r) => ({ r with _fixed: \n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:Crypto\"]\n     }))\n  |> map(fn: (r) => ({ r with _property: \n    r[\"Assets:Property:6CommonRoad\"]\n     }))\n  |> map(fn: (r) => ({ r with _debt: \n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
@@ -1158,7 +1177,7 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n     }))\n  |> difference(nonNegative: false, columns: [\"_value\"])\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Assets:Property:6CommonRoad\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"]\n     }))\n  |> difference(nonNegative: false, columns: [\"_value\"])\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\"\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
@@ -1409,7 +1428,7 @@
             "type": "influxdb",
             "uid": "P5697886F9CA74929"
           },
-          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    ])\n  |> yield()",
+          "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Property:6CommonRoad\",\n    ])\n  |> yield()",
           "refId": "A"
         }
       ],
@@ -1435,33 +1454,33 @@
       {
         "current": {
           "selected": false,
-          "text": "9",
-          "value": "9"
+          "text": "12",
+          "value": "12"
         },
         "hide": 0,
         "label": "Number of months for MA",
         "name": "ma_months",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "12",
             "value": "12"
           }
         ],
-        "query": "9",
+        "query": "12",
         "skipUrlSync": false,
         "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "2019-12-18T16:07:16.935Z",
-    "to": "2023-10-27T13:35:25.708Z"
+    "from": "now-5y",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Finance",
   "uid": "joXcUZWIk",
-  "version": 6,
+  "version": 8,
   "weekStart": ""
 }
