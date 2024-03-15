@@ -8,3 +8,4 @@ infrastructure/secrets.tfvars
 # terraform generated files
 infrastructure/.terraform
 infrastructure/.terraform.lock.hcl
+.idea/
