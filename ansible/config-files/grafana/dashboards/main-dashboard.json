@@ -31,7 +31,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -94,7 +94,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\")\n  |> filter(fn: (r) => r._field == \"relevant_expenses\")\n  |> movingAverage(n: ${ma_months})\n  |> yield()",
           "refId": "A"
@@ -107,7 +107,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -176,7 +176,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\")\n  |> filter(fn: (r) => r._field == \"saving_rate\")\n  |> movingAverage(n: ${ma_months})\n  |> yield()",
           "refId": "A"
@@ -189,7 +189,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -257,7 +257,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"finance\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Assets:Property:6CommonRoad\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"] +\n    r[\"Liabilities:Mortgage:6CommonRoad\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\",\n    \"Liabilities:Mortgage:6CommonRoad\"\n    ])\n  |> yield()",
           "refId": "A"
@@ -270,7 +270,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "fieldConfig": {
         "defaults": {
@@ -341,7 +341,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account == \"Liabilities:StudentLoan\"))",
           "refId": "A"
@@ -371,7 +371,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -468,7 +468,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\")\n  |> filter(fn: (r) => r._field == \"relevant_expenses\")\n  |> yield()",
           "refId": "A"
@@ -481,7 +481,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -579,7 +579,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\")\n  |> filter(fn: (r) => r._field == \"saving_rate\")\n  |> yield()",
           "refId": "A"
@@ -592,7 +592,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -688,7 +688,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"finance\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Assets:Property:6CommonRoad\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"] +\n    r[\"Liabilities:Mortgage:6CommonRoad\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\",\n    \"Liabilities:Mortgage:6CommonRoad\"\n    ])\n  |> yield()",
           "refId": "A"
@@ -701,7 +701,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "fieldConfig": {
         "defaults": {
@@ -800,7 +800,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account == \"Liabilities:StudentLoan\"))",
           "refId": "A"
@@ -830,7 +830,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -925,7 +925,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Assets:Property:6CommonRoad\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"] +\n    r[\"Liabilities:Mortgage:6CommonRoad\"]\n\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\",\n    \"Liabilities:Mortgage:6CommonRoad\"\n    ])\n  |> yield()",
           "refId": "A"
@@ -938,7 +938,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -1097,7 +1097,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _liquid: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"]\n     }))\n  |> map(fn: (r) => ({ r with _fixed: \n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:Crypto\"]\n     }))\n  |> map(fn: (r) => ({ r with _property: \n    r[\"Assets:Property:6CommonRoad\"]\n     }))\n  |> map(fn: (r) => ({ r with _debt: \n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"] +\n    r[\"Liabilities:Mortgage:6CommonRoad\"]\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\",\n    \"Liabilities:Mortgage:6CommonRoad\"\n    ])\n  |> yield()",
           "refId": "A"
@@ -1110,7 +1110,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -1201,7 +1201,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/) or (r.account =~ /Liabilities:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"] +\n    r[\"Assets:Investments:MoneyboxLISA\"] +\n    r[\"Assets:Investments:StocksSharesISA\"] +\n    r[\"Assets:Investments:Crypto\"] +\n    r[\"Assets:Property:6CommonRoad\"] +\n    r[\"Liabilities:StudentLoan\"] +\n    r[\"Liabilities:Amex\"] +\n    r[\"Liabilities:Mortgage:6CommonRoad\"]\n     }))\n  |> difference(nonNegative: false, columns: [\"_value\"])\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Investments:MoneyboxLISA\",\n    \"Assets:Investments:StocksSharesISA\",\n    \"Assets:Investments:Crypto\",\n    \"Assets:Property:6CommonRoad\",\n    \"Liabilities:StudentLoan\",\n    \"Liabilities:Amex\",\n    \"Liabilities:Mortgage:6CommonRoad\"\n    ])\n  |> yield()",
           "refId": "A"
@@ -1214,7 +1214,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -1259,7 +1259,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1323,7 +1324,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:BankAccounts:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: \n    r[\"Assets:BankAccounts:HSBC\"] +\n    r[\"Assets:BankAccounts:Monzo\"] +\n    r[\"Assets:BankAccounts:MarcusSavings\"] +\n    r[\"Assets:BankAccounts:CryptoCard\"]\n     }))\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\"\n    ])\n  |> yield()",
           "refId": "A"
@@ -1336,7 +1337,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P5697886F9CA74929"
+        "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
       },
       "description": "",
       "fieldConfig": {
@@ -1381,7 +1382,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1454,7 +1456,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P5697886F9CA74929"
+            "uid": "f171e153-9aba-4ba5-be91-cb5a7459222a"
           },
           "query": "from(bucket: \"python\")\n  |> range(start: 0)\n  |> filter(fn: (r) => r._measurement == \"${bucket_name}\" and (r.account =~ /Assets:*/))\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"account\"], valueColumn: \"_value\")\n  |> drop(columns: [\n    \"Assets:BankAccounts:Monzo\",\n    \"Assets:BankAccounts:HSBC\",\n    \"Assets:BankAccounts:MarcusSavings\",\n    \"Assets:BankAccounts:CryptoCard\",\n    \"Assets:Property:6CommonRoad\",\n    ])\n  |> yield()",
           "refId": "A"
@@ -1508,6 +1510,6 @@
   "timezone": "",
   "title": "Finance",
   "uid": "joXcUZWIk",
-  "version": 4,
+  "version": 2,
   "weekStart": ""
 }

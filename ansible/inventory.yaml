@@ -3,4 +3,4 @@ rpi:
    ubuntu-rpi
  vars:
    ansible_ssh_user: ansible-ssh
-   ansible_ssh_private_key_file: /Users/charlie.wren/.ssh/ansible-ssh
+   ansible_ssh_private_key_file: /Users/charlie.wren/.ssh/id_ed25519

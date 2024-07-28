@@ -28,7 +28,7 @@ ping:
 
 .PHONY: ssh # ssh as ansible
 ssh:
-	ssh -i ~/.ssh/ansible-ssh ansible-ssh@ubuntu-rpi
+	ssh -i ~/.ssh/id_ed25519 ansible-ssh@ubuntu-rpi
 
 
 # Terraform commands
