@@ -47,7 +47,7 @@ services:
     depends_on:
       - mosquitto
     volumes:
-      - '$PWD/ansible/zigbee2mqtt-data:/app/data'
+      - '/home/ansible-ssh/ansible/zigbee2mqtt-data:/app/data'
       - '/run/udev:/run/udev:ro'
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
@@ -55,7 +55,7 @@ services:
       - TZ=Europe/London
     privileged: true
     restart: always
-    image: koenkk/zigbee2mqtt
+    image: koenkk/zigbee2mqtt:1.40.1
   
   influxdb:
     container_name: influxdb
