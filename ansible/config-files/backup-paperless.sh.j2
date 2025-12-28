@@ -1,0 +1,6 @@
+aws configure set aws_access_key_id {{ AWS_ACCESS_KEY_ID }}
+aws configure set aws_secret_access_key {{ AWS_SECRET_ACCESS_KEY }}
+
+docker exec ansible-paperless-webserver-1 document_exporter ../export
+tar -cvzf /home/ansible-ssh/ansible/paperless-export.tgz /home/ansible-ssh/ansible/export
+aws s3api put-object --bucket {{ BUCKET_NAME }} --key paperless-export.tgz --body /home/ansible-ssh/ansible/paperless-export.tgz

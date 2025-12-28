@@ -59,6 +59,7 @@
     loop:
       - { src: config-files/configuration.yaml.j2, dest: /home/ansible-ssh/ansible/zigbee2mqtt-data/configuration.yaml }
       - { src: config-files/backup-cron.sh.j2, dest: /home/ansible-ssh/ansible/backup-cron.sh }
+      - { src: config-files/backup-paperless.sh.j2, dest: /home/ansible-ssh/ansible/backup-paperless.sh }
       - { src: config-files/grafana/datasources/influxdb.yaml.j2, dest: /home/ansible-ssh/ansible/grafana/datasources/influxdb.yaml }
 
   - name: Backup homeassistant to S3 at 4am daily
@@ -67,6 +68,13 @@
       minute: "0"
       hour: "4"
       job: "sudo /home/ansible-ssh/ansible/backup-cron.sh >/dev/null 2>&1"
+
+  - name: Backup paperless to S3 at 5am daily
+    ansible.builtin.cron:
+      name: "paperless s3 backup"
+      minute: "0"
+      hour: "5"
+      job: "sudo /home/ansible-ssh/ansible/backup-paperless.sh >/dev/null 2>&1"
 
   - name: Setup SSH rate limiting
     become: yes
